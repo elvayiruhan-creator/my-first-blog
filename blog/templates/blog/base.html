@@ -6,12 +6,16 @@
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <header>
-            <h1><a href="/">Django Girls Blog</a></h1>
+        <header class="page-header"> <div class="container">
+                <h1><a href="/">Django Girls Blog</a></h1>
+            </div>
         </header>
-        <main>
-            {% block content %}
-            {% endblock %}
+        
+        <main class="content container"> <div class="row">
+                <div class="col-md-8"> {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
         </main>
     </body>
 </html>
