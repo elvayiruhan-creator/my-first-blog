@@ -1,37 +1,37 @@
 import streamlit as st
-import seaborn as sns
-from matplotlib import pyplot as plt
+from weather import get_current_weather
+from stylist import recommend_outfit
 
-@st.cache_data 
-def load_data():
-    return sns.load_dataset('penguins')
+st.set_page_config(page_title="AI Stylist", page_icon="👗", layout="centered")
 
-df = load_data()
+st.title("👗 AI Stylist")
+st.write("Your smart wardrobe powered by real-time weather data.")
+st.markdown("---")
 
-st.write("# Penguins Dashboard")
+city = st.text_input("Enter your city name:", "Berlin")
 
-# 创建四个标签页
-tab1, tab2, tab3, tab4 = st.tabs(["数据表格", "散点图", "直方图", "说明"])
+if st.button("Generate My Outfit"):
+    with st.spinner(f"Checking weather in {city} and browsing your wardrobe..."):
+        try:
+            temp, condition = get_current_weather(city)
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader(f"🌍 Weather in {city}")
+                st.info(f"🌡️ Temperature: {temp} °C")
+                st.info(f"☁️ Condition: {condition}")
+            
+            with col2:
+                outfit, advice = recommend_outfit(temp, condition)
+                st.subheader("👚 Today's Outfit")
+                if isinstance(outfit, str):
+                    st.error(outfit) 
+                else:
+                    for item_type, item_data in outfit.items():
+                        st.success(f"**{item_type}**: {item_data['color']} {item_data['sub_category']}")
+            
+            st.markdown("---")
+            st.warning(f"**💡 Stylist Tip:** {advice}")
 
-# --- 第一个标签页：展示表格 ---
-with tab1:
-    st.write("### 企鹅原始数据前5行")
-    st.write(df.head(5))
-
-# --- 第二个标签页：展示散点图 ---
-with tab2:
-    st.write("### 喙部长度 vs 深度")
-    fig, ax = plt.subplots()
-    sns.scatterplot(data=df, x="bill_length_mm", y="bill_depth_mm", hue="species", ax=ax)
-    st.pyplot(fig)
-
-# --- 第三个标签页：展示直方图 ---
-with tab3:
-    st.write("### 企鹅体重分布")
-    fig2, ax2 = plt.subplots()
-    sns.histplot(data=df, x="body_mass_g", kde=True, ax=ax2)
-    st.pyplot(fig2)
-
-# --- 第四个标签页 ---
-with tab4:
-    st.write("这是一个用 Streamlit 做的专业数据分析仪表盘。")
+        except Exception as e:
+            st.error(f"Oops! Could not get data for '{city}'. (Error: {e})")
