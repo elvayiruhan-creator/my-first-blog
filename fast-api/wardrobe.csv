@@ -1,0 +1,13 @@
+id,category,sub_category,color,min_temp,max_temp
+1,Tops,T-shirt,White,20,35
+2,Tops,Long Sleeve Shirt,Light Blue,15,25
+3,Tops,Hoodie,Grey,10,20
+4,Bottoms,Shorts,Beige,22,35
+5,Bottoms,Jeans,Blue,10,25
+6,Bottoms,Wool Trousers,Dark Grey,0,15
+7,Outerwear,Light Jacket,Black,12,20
+8,Outerwear,Wool Coat,Camel,-5,10
+9,Outerwear,Down Jacket,Black,-15,5
+10,Shoes,Sandals,Brown,25,40
+11,Shoes,Sneakers,White,5,30
+12,Shoes,Boots,Dark Brown,-10,10
