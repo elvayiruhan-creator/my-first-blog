@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import os  # Built-in library to handle file paths safely
 
 def recommend_outfit(current_temp: int, condition: str):
     """
@@ -9,13 +10,16 @@ def recommend_outfit(current_temp: int, condition: str):
     print(f"🧠 Stylist is thinking... (Temp: {current_temp}°C, Weather: {condition})")
     
     try:
-        # 1. Open the digital wardrobe
-        df = pd.read_csv("wardrobe.csv")
+        # Magic Fix: Dynamically locate wardrobe.csv relative to this file's location
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        csv_path = os.path.join(current_dir, "wardrobe.csv")
+        
+        # Open the digital wardrobe using the absolute path
+        df = pd.read_csv(csv_path)
     except FileNotFoundError:
         return "Error: wardrobe.csv not found. Please check your folder.", ""
 
     # 2. Filter clothes based on the current temperature
-    # Rule: current_temp must be between min_temp and max_temp
     suitable_clothes = df[(df['min_temp'] <= current_temp) & (df['max_temp'] >= current_temp)]
 
     # 3. Categorize available clothes
@@ -27,7 +31,6 @@ def recommend_outfit(current_temp: int, condition: str):
     # 4. Apply Fashion Rules & Select Items
     outfit = {}
     
-    # Randomly pick 1 Top, 1 Bottom, and 1 pair of Shoes if available
     if not tops.empty:
         outfit['Top'] = tops.sample(1).iloc[0]
     if not bottoms.empty:
@@ -53,7 +56,6 @@ def recommend_outfit(current_temp: int, condition: str):
 
 # --- Test Block ---
 if __name__ == "__main__":
-    # Let's pretend it's 12°C and Cloudy for this test
     test_temp = 12
     test_condition = "Cloudy"
     
@@ -61,10 +63,8 @@ if __name__ == "__main__":
     
     print("\n👗 --- YOUR OUTFIT OF THE DAY --- 👖")
     if isinstance(my_outfit, str):
-        print(my_outfit) # Prints error if file is missing
+        print(my_outfit)
     else:
-        # Loop through the selected clothes and print them nicely
         for item_type, item_data in my_outfit.items():
             print(f"- {item_type}: {item_data['color']} {item_data['sub_category']}")
-        
         print(f"\n💡 Stylist Tip: {my_advice}")
