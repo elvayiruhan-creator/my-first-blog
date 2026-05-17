@@ -1,0 +1,30 @@
+.stButton>button {
+    width: 100%;
+    border-radius: 20px;
+    height: 3.2em;
+    background-color: #ff4b4b;
+    color: white;
+    font-weight: bold;
+    border: none;
+    transition: 0.3s;
+}
+.stButton>button:hover {
+    background-color: #e04343;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.outfit-card {
+    background-color: white;
+    padding: 18px 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 12px;
+    border-left: 5px solid #ff4b4b;
+}
+.weather-info {
+    background: linear-gradient(135deg, #4ca1af, #2c3e50);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
