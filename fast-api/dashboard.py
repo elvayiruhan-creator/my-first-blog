@@ -67,13 +67,27 @@ if st.button("👗 Generate My Look of the Day"):
                 else:
                     # Dynamically render elegant cards based on chosen clothing items
                     for item_type, item_data in outfit.items():
-                        # Map categories to aesthetic emojis
+                        # 1. Map categories toaesthetic emojis
                         icon = "👔" if item_type == "Top" else "👖" if item_type == "Bottom" else "🧥" if item_type == "Outerwear" else "👟"
                         
+                        # 2. Extract the color to use as a dynamic placeholder background
+                        color = item_data['color']
+                        
+                        # 3. Handle specific colors (like Camel) that might not be CSS named colors
+                        # Let's map unique colors or provide a general safety net
+                        css_color = color.replace("Camel", "#C19A6B").replace("Blue", "DodgerBlue").replace("Light Blue", "PowderBlue").replace("Dark Grey", "SlateGrey").replace("Dark Brown", "#654321").replace("Brown", "#8B4513")
+
+                        # 4. Generate the enhanced outfit card with dynamic color visual
                         st.markdown(f"""
                             <div class="outfit-card">
-                                <span style="font-size: 1.15em; font-weight: bold;">{icon} {item_type}</span><br>
-                                <span style="color: #555555; font-size: 0.95em;">{item_data['color']} {item_data['sub_category']}</span>
+                                <div class="outfit-visual-container">
+                                    <div class="outfit-color-dot" style="background-color: {css_color};"></div>
+                                    <span class="outfit-emoji-large">{icon}</span>
+                                </div>
+                                <div class="outfit-details">
+                                    <span style="font-size: 1.15em; font-weight: bold;">{item_type}</span><br>
+                                    <span style="color: #555555; font-size: 0.95em;">{color} {item_data['sub_category']}</span>
+                                </div>
                             </div>
                         """, unsafe_allow_html=True)
                         
