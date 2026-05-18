@@ -1,78 +1,86 @@
-/* Import premium Google Font */
+/* Import Premium Typography from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Apply clean typography globally to custom cards */
+/* Apply clean typography globally to custom elements */
 .stApp, .outfit-card, .weather-info {
     font-family: 'Inter', -apple-system, sans-serif;
 }
 
+/* Luxury Minimalist Control Button */
 .stButton>button {
     width: 100%;
-    border-radius: 25px;
-    height: 3.4em;
-    background-color: #111111; /* Luxury Black instead of bright red */
+    border-radius: 30px;
+    height: 3.5em;
+    background-color: #111111;
     color: white;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     border: none;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .stButton>button:hover {
-    background-color: #333333;
+    background-color: #2b2b2b;
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
-/* Premium Outfit Card with Micro-interactions */
+/* Premium Outfit Card with Flex Layout and Micro-interactions */
 .outfit-card {
     background-color: white;
-    padding: 16px 24px;
+    padding: 16px;
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-    margin-bottom: 14px;
-    border-left: 4px solid #111111;
-    display: flex;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    margin-bottom: 16px;
+    border-left: 5px solid #111111;
+    display: flex; /* Flexbox alignment for image + text */
     align-items: center;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Apple-like smooth transition */
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Smooth fluid movement */
+    cursor: pointer;
 }
 
-/* The Secret Sauce: Premium Hover Lift Effect */
+/* The Apple-style Micro-Hover Lift Effect */
 .outfit-card:hover {
-    transform: translateY(-4px); 
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
-    border-left: 4px solid #ff4b4b; /* Highlights red on hover */
+    transform: translateY(-5px) scale(1.01); /* Soft floating rise */
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08); /* Deep elegant shadow */
+    border-left: 5px solid #ff4b4b; /* Distinct high-end red highlight on active hover */
 }
 
-.outfit-visual-container {
+/* Aesthetic Image Container inside the card */
+.outfit-image-area {
+    width: 85px;
+    height: 85px;
+    margin-right: 20px;
     position: relative;
-    margin-right: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 55px;
-    height: 55px;
+    flex-shrink: 0;
 }
 
-.outfit-color-dot {
-    width: 50px;
-    height: 50px;
+.outfit-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Keeps aspect ratio clean */
     border-radius: 12px;
-    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
-.outfit-emoji-large {
+/* Tiny dynamic color indicator dot nested on top of the image */
+.outfit-color-indicator {
     position: absolute;
-    font-size: 2.2em;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    bottom: -4px;
+    right: -4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
 
-/* Deep minimalist gradient for weather info */
+/* Deep modern dark gradient for weather status display */
 .weather-info {
-    background: linear-gradient(135deg, #2c3e50, #0f2027);
+    background: linear-gradient(135deg, #1e272c, #0f171e);
     color: white;
-    padding: 35px;
-    border-radius: 20px;
+    padding: 40px 30px;
+    border-radius: 24px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.1);
 }

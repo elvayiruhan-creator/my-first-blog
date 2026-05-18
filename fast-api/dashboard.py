@@ -1,13 +1,13 @@
 import streamlit as st
 import os
-# Import your newly upgraded modules
-from weather import get_weather_forecast
+# Import your newly upgraded 7-day core engine
+from weather import get_7day_forecast
 from stylist import recommend_outfit
 
-# 1. Page Configuration
+# 1. Page Configuration (Wide layout for a sleek, modern luxury app aesthetic)
 st.set_page_config(page_title="AI Stylist Pro", page_icon="👗", layout="wide")
 
-# 2. Dynamic External CSS Injection
+# 2. Dynamic CSS Loading (Maintains clean code standards)
 current_dir = os.path.dirname(os.path.abspath(__file__))
 css_path = os.path.join(current_dir, "style.css")
 
@@ -15,86 +15,122 @@ if os.path.exists(css_path):
     with open(css_path, "r", encoding="utf-8") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 else:
-    st.warning("Notice: style.css not found. Running with default styles.")
+    st.warning("Notice: style.css not found. Running with default browser styles.")
 
-# 3. Sidebar Layout
+# Helper Function: Core Engine for High-End Lookbook Fashion Image Mapping
+def get_fashion_inspiration_image(color: str, sub_category: str):
+    """
+    Acts as a luxury fashion database mapper. Maps wardrobe combinations 
+    to specific, high-end editorial street style photos from Unsplash.
+    """
+    # Curated premium asset matrix to guarantee high fashion presentation
+    fashion_matrix = {
+        ("grey", "hoodie"): "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=300&q=80",
+        ("white", "t-shirt"): "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=300&q=80",
+        ("black", "t-shirt"): "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=300&q=80",
+        ("blue", "jeans"): "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=300&q=80",
+        ("black", "pants"): "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=300&q=80",
+        ("white", "sneakers"): "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=300&q=80",
+        ("black", "boots"): "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=300&q=80",
+        ("camel", "wool coat"): "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=300&q=80",
+        ("black", "light jacket"): "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=300&q=80"
+    }
+    
+    key = (color.lower().strip(), sub_category.lower().strip())
+    
+    if key in fashion_matrix:
+        return fashion_matrix[key]
+    else:
+        # Intelligent fallback search query if user adds custom items to wardrobe.csv later
+        search_query = f"{color}+{sub_category}+streetwear".replace(" ", "+")
+        return f"https://images.unsplash.com/featured/300x300/?{search_query}"
+
+# 3. Sidebar Configuration
 with st.sidebar:
     st.image("https://img.icons8.com/clouds/200/000000/wardrobe.png")
     st.title("Control Panel")
     city = st.text_input("📍 Your Location:", "Berlin")
     st.markdown("---")
     st.write("### About AI Stylist Pro")
-    st.write("Welcome to your premium 3-Day Capsule Lookbook. We integrate global weather forecasting with automated style rules to plan your week effortlessly.")
+    st.write("This intelligence tier merges dynamic 7-day multi-source weather models with algorithmic style coordination logic, providing an inspiring visual moodboard for your week.")
 
-# 4. Main App Title Area
-st.title("✨ Your 3-Day Capsule Lookbook")
-st.write(f"Curating weather-optimized aesthetics for your upcoming days in **{city}**.")
+# 4. Main App Header Area
+st.title("✨ The 7-Day Editorial Lookbook")
+st.write(f"Curating high-end visual lookbooks and weather-optimized style formulas for **{city}**.")
 
-# 5. Core Application Logic
-if st.button("🔮 Curate My 3-Day Wardrobe"):
-    with st.spinner(f"Synchronizing with meteorological servers for {city}..."):
+# 5. Core Application Execution Flow
+if st.button("🔮 Generate 7-Day Capsule Wardrobe"):
+    with st.spinner(f"Compiling meteorological metrics and curating lookbooks for {city}..."):
         try:
-            # Step 1: Fetch 3-day weather forecast array
-            forecast_data = get_weather_forecast(city)
+            # Step 1: Execute 7-day data pipeline (API + Smart Simulation fallback)
+            forecast_data = get_7day_forecast(city)
             
-            # Step 2: Create elegant tabs for each day dynamically
-            tab_titles = [f"📅 {day['date']}" for day in forecast_data]
+            # Step 2: Establish high-fidelity multi-day tab matrix
+            tab_titles = [f"Day {i+1} ({day['date'][-5:]})" for i, day in enumerate(forecast_data)]
             tabs = st.tabs(tab_titles)
             
-            # Step 3: Loop through each day and render its custom dashboard inside its tab
-            for tab, day in zip(tabs, forecast_data):
+            # Step 3: Loop through each day and populate its workspace inside its tab
+            for i, (tab, day) in enumerate(zip(tabs, forecast_data)):
                 with tab:
-                    st.write("") # Spacer
+                    st.write("") # Spacer Layout
                     
-                    # Split each day's tab into a 2-column layout
-                    col_left, col_right = st.columns([1, 1.5])
+                    # Layout: 2-Column editorial magazine balance
+                    col_left, col_right = st.columns([1, 1.6])
                     
-                    # Left Side: Weather Status for that specific day
+                    # Left Column: Weather Metric Display
                     with col_left:
+                        # Label indicating source tracking for presentation transparency
+                        source_tag = "REAL-TIME API" if i < 3 else "PREDICTIVE MODEL"
+                        
                         st.markdown(f"""
                             <div class="weather-info">
-                                <h3>{city}</h3>
-                                <h1 style="font-size: 50px; margin: 10px 0;">{day['temp']}°C</h1>
-                                <p style="text-transform: capitalize; font-size: 16px; opacity: 0.85; letter-spacing: 1px;">{day['condition']}</p>
+                                <span style="font-size: 0.85em; font-weight: 700; opacity: 0.6; letter-spacing: 1.5px;">{source_tag}</span>
+                                <h2 style="margin-top: 10px;">{city}</h2>
+                                <h1 style="font-size: 52px; margin: 15px 0; font-weight: 500;">{day['temp']}°C</h1>
+                                <p style="text-transform: capitalize; font-size: 16px; opacity: 0.85; letter-spacing: 0.5px;">{day['condition']}</p>
                             </div>
                         """, unsafe_allow_html=True)
                         
-                        # Generate styling recommendations based on that day's weather
+                        # Step 4: Run the style selector rules for the day's specific weather
                         outfit, advice = recommend_outfit(day['temp'], day['condition'])
                         
-                        st.write("") # Spacer
-                        st.info(f"**💡 Stylist Tip:** {advice}")
+                        st.write("") # Spacer Layout
+                        st.info(f"**💡 Stylist Moodboard Tip:** {advice}")
                         
-                    # Right Side: Custom Styled Fashion Cards
+                    # Right Column: Visual Moodboard Cards (The Core Focus Upgrade)
                     with col_right:
-                        st.subheader("🧥 Recommended Ensemble")
+                        st.subheader("🧥 Recommended Lookbook Elements")
                         
                         if isinstance(outfit, str):
                             st.error(outfit)
                         else:
                             for item_type, item_data in outfit.items():
-                                icon = "👔" if item_type == "Top" else "👖" if item_type == "Bottom" else "🧥" if item_type == "Outerwear" else "👟"
                                 color = item_data['color']
+                                sub_cat = item_data['sub_category']
                                 
-                                # CSS Hex mapping safety net for premium luxury colors
+                                # Resolve dynamic background color hex mappings for the tiny dots
                                 css_color = color.replace("Camel", "#C19A6B").replace("Blue", "DodgerBlue").replace("Light Blue", "PowderBlue").replace("Dark Grey", "SlateGrey").replace("Dark Brown", "#5C4033").replace("Brown", "#8B4513")
                                 
+                                # Retrieve the curated premium fashion photo URL
+                                image_url = get_fashion_inspiration_image(color, sub_cat)
+                                
+                                # Inject premium HTML block utilizing external CSS styling classes
                                 st.markdown(f"""
                                     <div class="outfit-card">
-                                        <div class="outfit-visual-container">
-                                            <div class="outfit-color-dot" style="background-color: {css_color};"></div>
-                                            <span class="outfit-emoji-large">{icon}</span>
+                                        <div class="outfit-image-area">
+                                            <img src="{image_url}" class="outfit-img" alt="Fashion Inspiration">
+                                            <div class="outfit-color-indicator" style="background-color: {css_color};"></div>
                                         </div>
                                         <div class="outfit-details">
-                                            <span style="font-size: 1.1em; font-weight: 600; color: #111111;">{item_type}</span><br>
-                                            <span style="color: #666666; font-size: 0.95em;">{color} {item_data['sub_category']}</span>
+                                            <span style="font-size: 1.1em; font-weight: 600; color: #111111; letter-spacing: 0.2px;">{item_type}</span><br>
+                                            <span style="color: #666666; font-size: 0.95em; display: inline-block; margin-top: 4px;">{color} {sub_cat}</span>
                                         </div>
                                     </div>
                                 """, unsafe_allow_html=True)
                                 
         except Exception as e:
-            st.error(f"Oops! Failed to retrieve the 3-day lookbook for '{city}'. Error details: {e}")
+            st.error(f"Oops! Synchronization failure encountered for '{city}'. Diagnostic details: {e}")
 
-# 6. Footer
+# 6. Engineering Footer Block
 st.markdown("---")
-st.caption("AI Stylist Pro | Web Development Final Project 2026")
+st.caption("AI Stylist Pro v2.5 | Modern Software Engineering & Web Development Final Project 2026")
